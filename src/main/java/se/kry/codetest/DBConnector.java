@@ -36,16 +36,47 @@ public class DBConnector {
     }
 
     Future<ResultSet> queryResultFuture = Future.future();
-
-    client.queryWithParams(query, params, result -> {
-      if(result.failed()){
-        queryResultFuture.fail(result.cause());
-      } else {
-        queryResultFuture.complete(result.result());
-      }
-    });
+    try {
+    	 client.queryWithParams(query, params, result -> {
+    	      if(result.failed()){
+    	        queryResultFuture.fail(result.cause());
+    	      } else {
+    	        queryResultFuture.complete(result.result());
+    	      }
+    	    });
+    	 
+    }
+    catch(Exception e) {
+    	e.printStackTrace();
+    }
+   
     return queryResultFuture;
   }
 
+//  public Future<ResultSet> delete(String query, JsonArray params) {
+//	    if(query == null || query.isEmpty()) {
+//	      return Future.failedFuture("Query is null or empty");
+//	    }
+//	    if(!query.endsWith(";")) {
+//	      query = query + ";";
+//	    }
+//
+//	    Future<ResultSet> queryResultFuture = Future.future();
+//	    try {
+//	    	 client.updateWithParams(query, params, result -> {
+//	    	      if(result.failed()){
+//	    	        queryResultFuture.fail(result.cause());
+//	    	      } else {
+//	    	        queryResultFuture.complete();
+//	    	      }
+//	    	    });
+//	    	 
+//	    }
+//	    catch(Exception e) {
+//	    	e.printStackTrace();
+//	    }
+//	   
+//	    return queryResultFuture;
+//	  }
 
 }
